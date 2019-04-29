@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
+<style>
+  body {
+    background-color: #6EFE60;
+  }
+
+  #headshot {
+    position: absolute;
+    left: 15%;
+    top: 10%;
+    animation: fadein 2s;
+  }
+
+  #headtext {
+    position: absolute;
+    left: 35%;
+    top: 20%;
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 20px;
+    padding: 30px;
+    color: black;
+    font-size: 50px;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    animation: fadetext 2.5s;
+    width: 45%;
+    text-align: center;
+    z-index: 1;
+  }
+
+  button {
+    font-size: 50px;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    padding: 30px;
+    width: 30%;
+    position: absolute;
+  }
+
+  #fotli {
+    background-color: orange;
+    color: black;
+    border: 5px solid black;
+    left: 18%;
+    top: 60%;
+  }
+
+  #refresca {
+    background-color: darkblue;
+    color: white;
+    border: 5px solid white;
+    left: 35%;
+    top: 60%;
+    opacity: 0;
+  }
+
+  #refresca a {
+    background-color: darkblue;
+    color: white;
+  }
+  
+  #daltabaix {
+    background-color: red;
+    color: white;
+    border: 5px solid darkred;
+    right: 18%;
+    top: 60%;
+  }
+
+  #pisos {
+    position: absolute;
+    bottom: 0%;
+    left: 45%;
+    width: 10%;
+    background-color: grey;
+    border: 5px solid black;
+    color: #20C20E;
+  }
+
+  #avio {
+    position: absolute;
+    bottom: 1%;
+    left: 45%;
+    width: 10%;
+  }
+
+  @keyframes fadein {
+    0%   {left:100%; transform: rotate(-40deg);}
+    25%  {left:75%; transform: rotate(-100deg);}
+    50%  {left:50%; transform: rotate(-190deg);}
+    75%  {left:30%; transform: rotate(-310deg);}
+    100% {left:15%; transform: rotate(-360deg);}
+  }
+
+  @keyframes fadetext {
+    0%   {opacity: 0;}
+    25%  {opacity: 0;}
+    50%  {opacity: 0;}
+    75%  {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+  @keyframes launch {
+    0%   {opacity: 1;}
+    25%   {left: 30%; opacity: 1;}
+    50%   {left: 25%; opacity: 1;}
+    75%   {left: 20%; opacity: 0.75;}
+    100%   {left: 15%; top: 35%; opacity: 0;}
+  }
+</style>
+
+<script type="text/javascript">
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var height = 0;
+    var bottom = 1;
+    var launched = false;
+    document.getElementById("fotli").onclick = function () {
+      if (!launched) {
+        height = height + 5;
+        bottom = bottom + 5;
+        document.getElementById("pisos").style.height = height.toString() + "%";
+        document.getElementById("avio").style.bottom = bottom.toString() + "%";
+      }
+    };
+
+    document.getElementById("daltabaix").onclick = function () {
+      if (height != 0) {
+        document.getElementById("avio").style.animation = "launch 5s";
+        document.getElementById("headtext").innerHTML = (height/5).toString() + " pisos!!";
+        document.getElementById("headtext").style.color = "red";
+        document.getElementById("fotli").style.opacity = "0";
+        document.getElementById("daltabaix").style.opacity = "0";
+        document.getElementById("refresca").style.opacity = "1";
+        launched = true;
+      }
+    };
+  }, false);
+
+  var dict = {
+    "headshot1.png": "headshot2.png",
+    "headshot2.png": "headshot1.png"
+  };
+  var dict2 = {
+    "": "rotate(-5deg)",
+    "rotate(-5deg)": "rotate(5deg)",
+    "rotate(5deg)": "rotate(-5deg)"
+  };
+
+  window.setInterval(function(){
+    var path = document.getElementById("headshot").src;
+    var arrPath = path.split('/');
+    var currentKey = arrPath[arrPath.length-1];
+    var text = document.getElementById("headtext").style.transform;
+    document.getElementById("headshot").src = path.replace(currentKey, dict[currentKey]);
+    document.getElementById("headtext").style.transform = text.replace(text, dict2[text]);
+  }, 225);
+</script>
+</head>
+<body>
+  <img src="headshot1.png" id="headshot" />
+  <div id="headtext">Els pisos que salta en Jofre</div>
+  <div id="pisos"></div>
+  <img src="avio.png" id="avio" />
+  <button id="fotli">Fot-li</button>
+  <button id="daltabaix">Avall</button>
+  <button id="refresca"><a href="/">Refresca</a></button>
+</body>
+</html>
